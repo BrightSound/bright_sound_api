@@ -17,6 +17,7 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
+    dotenv (2.1.1)
     equalizer (0.0.11)
     grape (0.18.0)
       activesupport
@@ -32,6 +33,8 @@ GEM
     i18n (0.7.0)
     ice_nine (0.11.2)
     json (2.0.2)
+    jwt (0.1.11)
+      multi_json (>= 1.5)
     minitest (5.9.1)
     multi_json (1.12.1)
     multi_xml (0.5.5)
@@ -58,6 +61,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    sequel (4.41.0)
+    sqlite3 (1.3.12)
     thread_safe (0.3.5)
     tool (0.2.3)
     tzinfo (1.2.2)
@@ -73,11 +78,15 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
+  dotenv
   grape
   json
+  jwt
   rack-test
   rake
   rspec
+  sequel
+  sqlite3
 
 BUNDLED WITH
    1.13.6
