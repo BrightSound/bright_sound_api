@@ -3,6 +3,16 @@ source 'https://rubygems.org'
 gem 'bundler'
 gem 'grape'
 gem 'json'
-gem 'rake', groups: [:development, :test]
-gem 'rack-test', group: :test
-gem 'rspec', group: :test
+gem 'sequel' # ORM
+gem 'jwt' # used for authentication token
+
+group :development, :test do
+  gem 'rake'
+  gem 'sqlite3'
+  gem 'dotenv'
+end
+
+group :test do
+  gem 'rack-test'
+  gem 'rspec'
+end
