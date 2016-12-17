@@ -1,7 +1,6 @@
 namespace :db do
   require "sequel"
   Sequel.extension :migration
-  DB = Sequel.connect(ENV['DATABASE_URL'])
 
   desc "Prints current schema version"
   task :version do

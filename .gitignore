@@ -1,4 +1,5 @@
 .idea/
 .DS_Store
-database.sqlite3
+bs_development.sqlite3
+bs_test.sqlite3
 .env
