@@ -1,3 +1,10 @@
 class User < Sequel::Model
-  plugin :json_serializer
+  include ::Mixins::Authenticatable
+
+  plugin :validation_helpers
+
+  def validate
+    super
+    validates_unique(:email)
+  end
 end
