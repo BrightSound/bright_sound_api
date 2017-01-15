@@ -1,23 +1,24 @@
 source 'https://rubygems.org'
 
-gem 'bundler'
-gem 'grape'
-gem 'grape-entity'
-gem 'json'
-gem 'sequel' # ORM
-gem 'jwt' # used for authentication token
-gem 'bcrypt' # used for storing passwords
+gem 'bundler', '1.13.6'
+gem 'grape', '0.19.0'
+gem 'grape-entity', '0.6.0'
+gem 'json', '2.0.2'
+gem 'sequel', '4.41.0' # ORM
+gem 'jwt', '1.5.6' # used for authentication token
+gem 'bcrypt', '3.1.11' # used for storing passwords
 
 group :development, :test do
-  gem 'rake'
-  gem 'sqlite3'
-  gem 'dotenv'
+  gem 'rake', '12.0.0'
+  gem 'sqlite3', '1.3.12'
+  gem 'dotenv', '2.1.1'
 end
 
 group :test do
-  gem 'rack-test'
-  gem 'rspec'
-  gem 'database_cleaner'
-  gem 'factory_girl'
-  gem 'faker' # used to stub realistic data in specs
+  gem 'rack', '2.0.1' # Travis Ci needs it here
+  gem 'rack-test', '0.6.3'
+  gem 'rspec', '3.5.0'
+  gem 'database_cleaner', '1.5.3'
+  gem 'factory_girl', '4.8.0'
+  gem 'faker', '1.7.2' # used to stub realistic data in specs
 end

@@ -7,4 +7,15 @@ class User < Sequel::Model
     super
     validates_unique(:email)
   end
+
+  def jwt
+    JsonWebToken.encode(jwt_payload)
+  end
+
+  private
+
+    def jwt_payload
+      { user_id: id }
+    end
+
 end
