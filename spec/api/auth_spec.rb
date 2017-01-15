@@ -18,7 +18,8 @@ describe BrightSound::Base::Auth, type: :controller do
       before(:each) { header 'Authorization', authorization_header_value }
 
       context ' - authentic JWT' do
-        let(:jwt) { 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.bHYPdXll1IcJdyqp91LLCPTYclBNWfDpoqgHkrziEaQ' }
+        let!(:user) { create(:user) }
+        let(:jwt) { user.jwt }
         it 'should allow action if JWT present' do
           get '/api/tests/response', headers: common_header_value
           expect(last_response.status).to eq(200)
