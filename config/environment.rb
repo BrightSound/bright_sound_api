@@ -1,6 +1,7 @@
 require 'dotenv'
 Dotenv.load
 
+require 'rack/cors'
 require 'bcrypt'
 require 'sequel'
 

@@ -7,6 +7,7 @@ gem 'json', '2.0.2'
 gem 'sequel', '4.41.0' # ORM
 gem 'jwt', '1.5.6' # used for authentication token
 gem 'bcrypt', '3.1.11' # used for storing passwords
+gem 'rack-cors' # allowing cross-origin resource sharing, for NG2
 
 gem 'music_brainz_wrapper', path: 'vendor/gems/music_brainz_wrapper'
 
