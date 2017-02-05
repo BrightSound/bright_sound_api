@@ -18,6 +18,16 @@ group :development, :test do
   gem 'dotenv', '2.1.1'
 end
 
+group :development do
+  gem 'guard', '2.14.1'
+  gem 'guard-bundler', '2.1.0', require: false
+  gem 'guard-rack', '2.2.0'
+end
+
+group :development, :production do
+  gem 'grape-cli'
+end
+
 group :test do
   gem 'rack', '2.0.1' # Travis Ci needs it here
   gem 'rack-test', '0.6.3'

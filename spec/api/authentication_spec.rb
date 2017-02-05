@@ -16,6 +16,7 @@ describe BrightSound::Authentication, type: :controller do
     let(:sign_up) do
       post '/api/authentication/sign_up', user_params
     end
+    let(:user) { User.first }
 
     it 'should change user count on success' do
       expect{ sign_up }.to change{ User.count }.from(0).to(1)
@@ -24,8 +25,8 @@ describe BrightSound::Authentication, type: :controller do
     it 'on success returns proper code and response' do
       sign_up
       expect(last_response.status).to eq(201)
-      expect(response_body['id']).to be_kind_of(Integer)
       expect(response_body['email']).to eq(email)
+      expect(response_body['access_token']).to eq(user.jwt)
       expect(response_body['error']).not_to be
     end
   end
@@ -36,8 +37,8 @@ describe BrightSound::Authentication, type: :controller do
     it 'on success returns proper code and response' do
       login
       expect(last_response.status).to eq(201)
-      expect(response_body['id']).to be_kind_of(Integer)
       expect(response_body['email']).to eq(email)
+      expect(response_body['access_token']).to eq(user.jwt)
       expect(response_body['error']).not_to be
     end
   end
