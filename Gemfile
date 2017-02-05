@@ -5,6 +5,7 @@ gem 'grape', '0.19.0'
 gem 'grape-entity', '0.6.0'
 gem 'json', '2.0.2'
 gem 'sequel', '4.41.0' # ORM
+gem 'sequel-seed', '1.0.0'
 gem 'jwt', '1.5.6' # used for authentication token
 gem 'bcrypt', '3.1.11' # used for storing passwords
 gem 'rack-cors' # allowing cross-origin resource sharing, for NG2

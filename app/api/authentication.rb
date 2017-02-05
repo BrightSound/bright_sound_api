@@ -9,8 +9,12 @@ module BrightSound
         requires :password, type: String, desc: 'User password'
       end
       post :login do
-        user = User.authenticate(params)
-        present user, with: BrightSound::Entities::UserEntity
+        if user = User.authenticate(params)
+          present user, with: BrightSound::Entities::UserEntity
+        else
+          # TODO: translate
+          error!('Unauthorized', 401)
+        end
       end
 
       desc 'Sign Up'

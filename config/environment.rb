@@ -5,6 +5,8 @@ require 'rack/cors'
 require 'bcrypt'
 require 'sequel'
 
+# TODO: this is wrong
+ENV['RACK_ENV'] ||= 'development'
 ENV['DATABASE_URL']="sqlite://bs_#{ENV['RACK_ENV']}.sqlite3"
 DB = Sequel.connect(ENV['DATABASE_URL'])
 

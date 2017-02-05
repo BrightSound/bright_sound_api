@@ -5,22 +5,17 @@ module BrightSound
 
       def authenticate!
         unless user_id_in_token?
-          unauthenticated
-          return
+          return nil
         end
         @current_user = User.with_pk!(auth_token[:user_id])
       rescue JWT::DecodeError, Sequel::NoMatchingRow
-        unauthenticated
+        return nil
       end
 
     private
 
       def user_id_in_token?
         http_token && auth_token && auth_token[:user_id].to_i
-      end
-
-      def unauthenticated
-        error!('Authentication error', 401)
       end
 
       def http_token
