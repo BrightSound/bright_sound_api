@@ -8,6 +8,8 @@ gem 'sequel', '4.41.0' # ORM
 gem 'jwt', '1.5.6' # used for authentication token
 gem 'bcrypt', '3.1.11' # used for storing passwords
 
+gem 'music_brainz_wrapper', path: 'vendor/gems/music_brainz_wrapper'
+
 group :development, :test do
   gem 'rake', '12.0.0'
   gem 'sqlite3', '1.3.12'

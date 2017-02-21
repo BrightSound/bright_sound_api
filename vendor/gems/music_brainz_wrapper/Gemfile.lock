@@ -1,0 +1,21 @@
+PATH
+  remote: .
+  specs:
+    music_brainz_wrapper (0.0.1)
+      httparty (>= 0.14.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
+    multi_xml (0.6.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  music_brainz_wrapper!
+
+BUNDLED WITH
+   1.13.6
