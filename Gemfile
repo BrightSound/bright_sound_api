@@ -25,7 +25,7 @@ group :development do
 end
 
 group :development, :production do
-  gem 'grape-cli'
+  gem 'grape-cli', '0.2.5'
 end
 
 group :test do
@@ -35,4 +35,5 @@ group :test do
   gem 'database_cleaner', '1.5.3'
   gem 'factory_girl', '4.8.0'
   gem 'faker', '1.7.2' # used to stub realistic data in specs
+  gem 'rspec_sequel_matchers', '0.4.0'
 end
