@@ -16,19 +16,19 @@ module Mixins
     module ClassMethods
       def authenticate(creds)
         if !creds['email'] or !creds['password']
-          return false
+          return
         end
 
         user = self[:email => creds['email']]
 
         if user.nil?
-          return false
+          return
         end
 
         if ::BCrypt::Password.new(user.password_hash) == creds['password']
           return user
         else
-          return false
+          return
         end
       end
     end

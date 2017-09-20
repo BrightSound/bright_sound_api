@@ -10,16 +10,7 @@ class User < Sequel::Model
     validates_unique(:email)
     validates_min_length(MIN_PASSWORD_LENGTH, :password)
     validates_max_length(MAX_PASSWORD_LENGTH, :password)
+    errors.add(:password, 'is too popular, not safe') if PasswordValidator.in_common?(password)
   end
-
-  def jwt
-    JsonWebToken.encode(jwt_payload)
-  end
-
-  private
-
-    def jwt_payload
-      { user_id: id }
-    end
 
 end

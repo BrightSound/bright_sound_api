@@ -9,6 +9,10 @@ gem 'sequel-seed', '1.0.0'
 gem 'jwt', '1.5.6' # used for authentication token
 gem 'bcrypt', '3.1.11' # used for storing passwords
 gem 'rack-cors' # allowing cross-origin resource sharing, for NG2
+gem 'grape_logging', '1.7.0'
+gem 'rack-session-sequel', '0.0.1'
+gem 'warden', '1.2.7'
+gem 'pry-byebug', '3.5.0'
 
 gem 'music_brainz_wrapper', path: 'vendor/gems/music_brainz_wrapper'
 
