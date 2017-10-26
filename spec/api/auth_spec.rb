@@ -12,16 +12,12 @@ describe BrightSound::Base::Auth, type: :controller do
   let!(:user) { create(:user) }
 
   describe 'Authorization' do
-    context 'headers provided' do
-      let(:authorization_header_value) { "Bearer #{jwt}" }
-
-      before(:each) { header 'Authorization', authorization_header_value }
-
-      context ' - authentic JWT' do
+    context 'session provided' do
+      context ' - authentic cookie' do
         let!(:user) { create(:user) }
-        let(:jwt) { user.jwt }
-        it 'should allow action if JWT present' do
-          get '/api/tests/response', headers: common_header_value
+        it 'should allow action if cookie present' do
+          login_as user
+          get '/api/tests/response'
           expect(last_response.status).to eq(200)
           expect(response_body['this_is_a_test']).to eq('hello everybody')
           expect(response_body['error']).not_to be
@@ -30,23 +26,22 @@ describe BrightSound::Base::Auth, type: :controller do
         end
       end
 
-      context ' - forged JWT' do
-        let(:jwt) { 'yJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.bHYPdXll1IcJdyqp91LLCPTYclBNWfDpoqgHkrziEa' }
-        it 'should forbid action if JWT forged' do
-          get '/api/tests/response', headers: common_header_value
+      context ' - forged cookie' do
+        it 'should forbid action if cookie forged' do
+          get '/api/tests/response'
           expect(last_response.status).to eq(401)
           expect(response_body['this_is_a_test']).not_to be
-          expect(response_body['error']).to eq('Authentication error')
+          expect(response_body['error']).to eq('Unauthorized')
         end
       end
     end
 
-    context 'headers not provided' do
-      it 'should forbid action if JWT absent' do
-        get '/api/tests/response', headers: common_header_value
+    context 'session not provided' do
+      it 'should forbid action if rack.session cookie absent' do
+        get '/api/tests/response'
         expect(last_response.status).to eq(401)
         expect(response_body['this_is_a_test']).not_to be
-        expect(response_body['error']).to eq('Authentication error')
+        expect(response_body['error']).to eq('Unauthorized')
       end
     end
   end

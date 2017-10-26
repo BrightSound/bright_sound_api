@@ -9,21 +9,8 @@ module BrightSound
         requires :password, type: String, desc: 'User password'
       end
       post :login do
-        # if user = warde.authenticate(params)
-          # binding.pry
-          # env["rack.session.options"][:domain] = 'localhost'
-          # binding.pry
-          # env['warden'].set_user user
-          # raise env['warden'].inspect
-          # env['warden'].authenticate
-          # raise request.env['warden'].inspect
-          raise env['warden'].inspect
-          present current_user, with: BrightSound::Entities::UserEntity
-        # else
-          # TODO: translate
-          # error(user.errors, 401)
-          # error!('Unauthorized', 401)
-        # end
+        login
+        present current_user, with: BrightSound::Entities::UserEntity
       end
 
       desc 'Sign Up'
