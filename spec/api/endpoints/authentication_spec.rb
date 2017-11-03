@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BrightSound::Authentication, type: :controller do
+describe BrightSound::Endpoints::Authentication, type: :controller do
   include Rack::Test::Methods
 
   def app

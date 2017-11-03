@@ -20,7 +20,8 @@ Dir["#{File.expand_path('../../app/models/*.rb', __FILE__)}"].each {|f| require 
 require 'music_brainz/wrapper'
 
 Dir["#{File.expand_path('../../app/api/entities/*.rb', __FILE__)}"].each {|f| require f}
+Dir["#{File.expand_path('../../app/api/endpoints/*.rb', __FILE__)}"].each {|f| require f}
 Dir["#{File.expand_path('../../app/api/*.rb', __FILE__)}"].each {|f| require f}
-Dir["#{File.expand_path('../../app/*.rb', __FILE__)}"].each {|f| require f}
+
 Dir["#{File.expand_path('../../lib/*.rb', __FILE__)}"].each {|f| require f}
 
