@@ -13,7 +13,7 @@ module BrightSound
           success!(user)
         else
           # TODO: translate
-          fail!('Email or password are invalid.')
+          throw :warden, auth: 'Email or password are invalid.'
         end
       end
     end

@@ -12,7 +12,8 @@ module BrightSound
         end
         post :login do
           login
-          present current_user, with: BrightSound::Entities::UserEntity
+          present current_user,
+                  with: BrightSound::Entities::UserEntity if current_user
         end
 
         desc 'Sign Up'
