@@ -13,37 +13,71 @@ describe BrightSound::Endpoints::Authentication, type: :controller do
   let(:response_body) { JSON.parse(last_response.body) }
   let(:response_headers) { last_response.headers }
 
+  let(:session_cookie_content) { response_headers['Set-Cookie'] }
+  let(:sid_from_cookie) { /rack.session=(\w+);/.match(session_cookie_content)[1] }
+  let(:session_from_db) { Session.where(sid: sid_from_cookie).first }
+
   describe '#sign_up' do
     let(:sign_up) do
       post '/api/authentication/sign_up', user_params
     end
-    let(:user) { User.first }
+    let(:user_from_db) { User.first }
 
-    it 'should change user count on success' do
-      expect{ sign_up }.to change{ User.count }.from(0).to(1)
+    context 'on success' do
+      it 'should change user count' do
+        expect{ sign_up }.to change{ User.count }.from(0).to(1)
+      end
+
+      it 'should change sessions count' do
+        expect{ sign_up }.to change{ Session.count }.from(0).to(1)
+      end
+
+      it 'returns proper code and response' do
+        sign_up
+        expect(user_from_db.email).to eq(email)
+        expect(last_response.status).to eq(201)
+        expect(response_body['email']).to eq(email)
+        expect(response_body['error']).not_to be
+      end
     end
 
-    it 'on success returns proper code and response' do
-      sign_up
-      expect(last_response.status).to eq(201)
-      expect(response_body['email']).to eq(email)
-      expect(response_body['error']).not_to be
+    context 'on failure' do
+      let!(:user) { create(:user, user_params) }
+
+      it 'should not change user count' do
+        expect{ sign_up }.not_to change{ User.count }
+      end
+
+      it 'should change sessions count' do
+        expect{ sign_up }.not_to change{ Session.count }
+      end
+
+      it 'returns proper code and response' do
+        sign_up
+        expect(last_response.status).to eq(422)
+        expect(response_body['error']).to eq('email is already taken')
+      end
     end
   end
 
   describe '#login' do
     let!(:user) { create(:user, user_params) }
     let(:login) { post '/api/authentication/login', user_params }
-    let(:session_cookie_content) { response_headers['Set-Cookie'] }
-    let(:sid_from_cookie) { /rack.session=(\w+);/.match(session_cookie_content)[1] }
-    let(:session_from_db) { Session.where(sid: sid_from_cookie).first }
-    it 'on success returns proper code and response' do
-      login
-      expect(last_response.status).to eq(201)
-      expect(response_body['email']).to eq(email)
-      expect(response_body['error']).not_to be
-      expect(Session.all.count).to eq(1)
-      expect(session_from_db).to be
+
+    context 'on success' do
+      it 'returns proper code and response' do
+        login
+        expect(last_response.status).to eq(201)
+        expect(sid_from_cookie).to be
+        expect(response_body['email']).to eq(email)
+        expect(response_body['error']).not_to be
+        expect(Session.all.count).to eq(1)
+        expect(session_from_db).to be
+      end
+    end
+
+    context 'on failure' do
+      it 'returns proper code and response'
     end
   end
 end

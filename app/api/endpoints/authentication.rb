@@ -4,6 +4,11 @@ module BrightSound
     class Authentication < Base
       resource :authentication do
 
+        after {
+          present current_user,
+                        with: BrightSound::Entities::UserEntity if current_user
+        }
+
         # curl -X GET localhost:9292/api/authentication/login
         desc 'Login'
         params do
@@ -12,8 +17,6 @@ module BrightSound
         end
         post :login do
           login
-          present current_user,
-                  with: BrightSound::Entities::UserEntity if current_user
         end
 
         desc 'Sign Up'
@@ -22,15 +25,8 @@ module BrightSound
           requires :password, type: String, desc: 'User password'
         end
         post :sign_up do
-          user = User.new(params)
-          begin
-            user.save
-            present user, with: BrightSound::Entities::UserEntity
-          rescue Sequel::ValidationFailed
-            error!('Validation error', 401)
-          end
+          login if User.create(params)
         end
-
       end
     end
   end
