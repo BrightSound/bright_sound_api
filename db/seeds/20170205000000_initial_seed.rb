@@ -2,6 +2,6 @@ Sequel.seed(:development, :test) do # Applies only to "development" and "test" e
   def run
     User.create \
       email: "user@example.com",
-      password: 'Qwer123!'
+      password: 'asdf123!'
   end
 end

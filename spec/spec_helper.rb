@@ -14,6 +14,7 @@ RSpec.configure do |config|
   config.include RspecSequel::Matchers
   config.include FactoryGirl::Syntax::Methods
   config.include Warden::Test::Helpers
+  config.include Rack::Test
 
   config.color = true
   config.formatter = :documentation

@@ -14,8 +14,11 @@ describe BrightSound::Endpoints::Authentication, type: :controller do
   let(:response_headers) { last_response.headers }
 
   let(:session_cookie_content) { response_headers['Set-Cookie'] }
-  let(:sid_from_cookie) { /rack.session=(\w+);/.match(session_cookie_content)[1] }
-  let(:session_from_db) { Session.where(sid: sid_from_cookie).first }
+  let(:sid_from_header) { /rack.session=(\w+);/.match(session_cookie_content)[1] }
+  let(:session_from_db) { Session.where(sid: sid_from_header).first }
+
+  let(:sid_from_cookies) { last_request.cookies['rack.session'] }
+  let(:sid_from_mock_session) { rack_mock_session.cookie_jar['rack.session'] }
 
   describe '#sign_up' do
     let(:sign_up) do
@@ -68,12 +71,34 @@ describe BrightSound::Endpoints::Authentication, type: :controller do
       it 'returns proper code and response' do
         login
         expect(last_response.status).to eq(201)
-        expect(sid_from_cookie).to be
+        expect(sid_from_header).to be
         expect(response_body['email']).to eq(email)
         expect(response_body['error']).not_to be
         expect(Session.all.count).to eq(1)
         expect(session_from_db).to be
       end
+    end
+
+    context 'on failure' do
+      it 'returns proper code and response'
+    end
+  end
+
+  describe '#logout' do
+    let!(:user) { create(:user, user_params) }
+    let(:login) { post '/api/authentication/login', user_params }
+    let(:logout) { post '/api/authentication/logout' }
+
+    before(:each) do
+      login
+    end
+
+    context 'on success' do
+      it 'should change user count' do
+        expect{ logout }.to change{ Session.count }.from(1).to(0)
+      end
+
+      it 'returns proper code and response'
     end
 
     context 'on failure' do
