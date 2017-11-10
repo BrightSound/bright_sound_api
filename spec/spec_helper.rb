@@ -4,17 +4,24 @@ require 'rack/test'
 require 'factory_girl'
 require 'faker'
 require 'database_cleaner'
+require 'rspec'
+require 'rspec_sequel_matchers'
 
 require File.expand_path('../../config/environment', __FILE__)
 
+
 RSpec.configure do |config|
+  config.include RspecSequel::Matchers
+  config.include FactoryGirl::Syntax::Methods
+  config.include Warden::Test::Helpers
+  config.include Rack::Test
+
   config.color = true
   config.formatter = :documentation
   config.mock_with :rspec
   config.expect_with :rspec
   config.raise_errors_for_deprecations!
 
-  config.include FactoryGirl::Syntax::Methods
   config.before(:suite) do
     FactoryGirl.find_definitions
     FactoryGirl.define do
