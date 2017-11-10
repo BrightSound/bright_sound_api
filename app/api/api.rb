@@ -5,5 +5,6 @@ module BrightSound
 
     mount ::BrightSound::Endpoints::Authentication
     mount ::BrightSound::Endpoints::Test
+    mount ::BrightSound::Endpoints::Search
   end
 end
